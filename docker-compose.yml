@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  ofelia:
+    image: mcuadros/ofelia:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./ofelia:/etc/ofelia
+  cert-issuer:
+    container_name: cert-issuer
+    build:
+      context: .
+    volumes:
+      - ./issuer:/issuer/
+      - ${ACME_DIR}:/root/.acme.sh
+      - ./deployment:/deployment
+    command: bash /issuer/auth.sh
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      TF_VAR_acme_dir: /root/.acme.sh
+      GCLOUD_PROJECT: ${GCLOUD_PROJECT}
