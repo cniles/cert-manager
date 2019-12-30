@@ -5,6 +5,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./ofelia:/etc/ofelia
+    restart: unless-stopped
   cert-issuer:
     container_name: cert-issuer
     build:
@@ -19,3 +20,4 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       TF_VAR_acme_dir: /root/.acme.sh
       GCLOUD_PROJECT: ${GCLOUD_PROJECT}
+    restart: unless-stopped
