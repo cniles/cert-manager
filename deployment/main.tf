@@ -3,6 +3,9 @@ provider "aws" {
 }
 
 terraform {
+  required_providers {
+    aws = "= 2.26.0"
+  }
   backend "s3" {
 	bucket = "tf-state-48729185794"
 	key = "cert-manager"
@@ -21,3 +24,4 @@ module "randomreids_cert" {
   acme_dir = var.acme_dir
   cert_name = "randomreids.com"
 }
+
